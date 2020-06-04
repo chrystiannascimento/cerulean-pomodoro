@@ -1,38 +1,262 @@
-.App {
+header {
+  font-size: 1.15em;
+  overflow: hidden;
+  background-color: #2a52be;
+  color: #f2f2f2;
+  display: flex;
+  flex-wrap: wrap;
+  position: fixed;
+  justify-content: space-around;
+  align-items: center;
+  top: 0;
+  width: 100%;
+ }
+
+
+ nav a {
+  float: right;
+  display: flex;
+  color: #f2f2f2;
   text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+nav a:hover {
+  background: #ddd;
+  color: black;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.navbar a {
+  float: right;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navbar a:hover {
+  background: #ddd;
+  color: black;
+}
+body {
+  font-family: helvetica neue,open sans,Helvetica,Arial,sans-serif;
+  font-size: 1em;
+  min-height: 100%;
+  display: block;
+  padding: 70px 0 20px;
+}
+.container {
+  justify-content: center;
+  align-items: center;
+}
+.main {
+    padding: 0 1rem;
+    margin: 0 auto;
+    max-width: 970px;
+    min-height: calc(100vh - 100px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+.clock {
+  color: #fff;
+    border-radius: 6px;
+    background-color: #2a52be;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 1rem 1rem 3rem;
+    text-align: center;
+    font-family: helvetica neue,open sans,Helvetica,Arial,sans-serif;
+}
+
+.c-head {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.c-time {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  font-size: 5em;
+}
+.c-description {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  font-size: 1rem;
+}
+ c-buttons {
+    width: 200px;
+    height: 3.5rem;
+    margin: 4px 20px;
+    border-color: #fff !important;
+    letter-spacing: .1em;
+ }
+
+ .c-timer_buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 13.6px;
+}
+
+ .c-buttons button {
+  width: 200px;
+  height: 3.5rem;
+  margin: 4px 20px;
+  border-color: #fff !important;
+  letter-spacing: .1em;
+}
+
+
+.c-btn--red {
+  background: #d04643;
+  color: #fff;
+  border-color: #d04643;
+}
+
+.c-btn {
+  background: #fff;
+  color: #373737;
+  background: var(--button-bg);
+  color: var(--control-color);
+  border-radius: 3px;
+  border: 1px solid #bdbdbd;
+  cursor: pointer;
+  padding: .4rem .9rem;
+  transition: all .2s;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  line-height: 1.5;
+  text-decoration: none;
+  -webkit-app-region: no-drag;
+  display: inline-flex;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+
+
+.pomodoro-todo {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+
+.create-todo {
+  width: 100%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.c-pomo {
+  display: flex;
+  padding: .2rem 0;
+  position: relative;
+  min-height: 3.125em;
+  align-items: center;
+  border-top: 1px solid #e3e3e3;
+  border-color: var(--theme-border-color);
+  transition: all .5s;
+}
+
+ .c-input {
+   color: var(--control-color);
+    background-color: var(--input-bg);
+    border-radius: 3px;
+    border: 1px solid #bdbdbd;
+    display: block;
+    font-family: "Helvetica Neue","Open Sans",Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    padding: .5rem .6rem;
+    resize: vertical;
+    width: 100%;
+    height: 2em;
+ }
+
+
+.todo-description input {
+  width: 100%;
+}
+
+.todo {
+ width: 100%;
+  border-bottom: 1px solid black;
+  padding: 1rem .6rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.t-form {
+  width: 100%;
+  height: 3.125em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-bottom: 50px;
+}
+
+
+.todo-cat {
+  width: 9.375em;
+  padding-right: 20px;
+  word-break: break-word;
+  position: relative; 
+
+}
+
+
+.todo-description {
+  padding-right: 20px;
+  width: 721px;
+}
+
+.t-input {
+  color: var(--control-color);
+   background-color: var(--input-bg);
+   border-radius: 3px;
+   border: 1px solid #bdbdbd;
+   display: block;
+   font-family: "Helvetica Neue","Open Sans",Helvetica,Arial,sans-serif;
+   font-size: 16px;
+   padding: .5rem .6rem;
+   resize: vertical;
+   width: 100%;
+   height: 1.4em;
+}
+
+.t-btn {
+  height: 40px;
+}
+
+.todo-list {
+  width: 100%;
+}
+
+.about {
+  padding-top: 50px;
 }
