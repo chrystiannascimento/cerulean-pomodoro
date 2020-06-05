@@ -1,6 +1,6 @@
 import React,{Fragment, useState, useEffect} from   "react"
 
-
+import Clock from "./Clock";
 
 
 const Home = () =>  {
@@ -20,24 +20,7 @@ const Home = () =>  {
             </header>
             
             <div className="main">
-                <div className="clock">
-                    <div className="c-head">
-                        <div>Settings</div>
-                        <div>POMODORO #1</div>
-                    </div>
-                    <div className="c-time">
-                        25 : 00
-                    </div>
-                    <div className="c-description">
-                        tarefa
-                    </div>
-                    <div className="c-buttons">
-                        <button className="c-btn c-btn--red">Iniciar</button>
-                        <button className="c-btn c-btn--red">Parar</button>
-                    </div>
-
-
-                </div>
+                <Clock/>
                 <div className="pomodoro-todo">
                     <h4>Tarefas</h4>
                     <div className="create-todo">
