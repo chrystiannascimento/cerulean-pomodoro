@@ -3,39 +3,101 @@ import React,{Fragment, useState, useEffect} from   "react"
 import Clock from "./Clock";
 import CreateTodo from "./CreateTodo"
 import TodoList from "./TodoList";
+import useCookie from "@use-hook/use-cookie";
+
+import Settings from './Settings';
+
 
 const Home = () =>  {
-    const [todos, setTodos]= useState([{id:1, category: "nova", description: "tarefa 1"}, {id:2, category: "nova", description: "tarefa 4"}, {id:3, category: "nova", description: "tarefa 3"}]);
-    const [dones, setDones] = useState([{id:1, category: "velha", description: "tarefa 0"}]);
-    const [kserial, setKserial] = useState(4)
+    const [currentTask, setCurrentTask] = useState({category:"", description: "no description"});
+    const [autoBreak, setAutoBreak]=useState(true);
     
+
+    //Cookies
+    const [name, setName] = useCookie("name", "Stefan");
+    const [todoCookie, setTodoCookie] = useCookie("todoCookie", JSON.stringify([]));
+    const [doneCookie, setDoneCookie] = useCookie("doneCookie", JSON.stringify([]));
+
+    //Settings
+    const [settings, setSettings]=useState({pomoDur: 50, shortDur: 10, longDur: 20, breakDelay: 2, autoStartPomodoro: true, autoStartBreak: false  });
+    const [pomoDur, setPomoDur]=useCookie("pomoDur",50);
+    const [shortDur, setShortDur]=useCookie("shortDur", 10);
+    const [longDur, setLongDur]=useCookie("longDur",20);
+    const [breakDelay, setBreakDelay] =useCookie("breakDelay",2);
+    const [autoStartPomodoro, setAutoStartPomodoro] = useCookie("autoStartPomodoro", true)
+    const [autoStartBreak, setAutoStartBreak] = useCookie("autoStartBreak", false)
+
+    const [todos, setTodos]= useState([]);
+    const [dones, setDones] = useState([]);
+
+
+   const updateTodos = (newTodos) =>{
+    setTodos(newTodos);
+    setTodoCookie(JSON.stringify(newTodos));
+
+   }
+
+   const updateDones = (newDones) =>{
+    setDones(newDones);
+    setDoneCookie(JSON.stringify(newDones));
+
+   }
     const addTodo = (e, category, description) => {
         e.preventDefault();
-        const newTodos = [...todos, {id: kserial, category: category, description: description }];
-        setKserial(kserial+1);
-        setTodos(newTodos);
-        console.log("adicionado", description);
+        const newTodos = [...todos, {category: category, description: description }];
+        updateTodos(newTodos);
+        console.log("pomodur", pomoDur);
+    }
+
+    const submitSettings = (e, settings) =>{
+        e.preventDefault();
+        setPomoDur(settings["pomoDur"]);
+        setShortDur(settings["shortDur"]);
+        setLongDur(settings["longDur"]);
+        setBreakDelay(settings["breakDelay"]);
+        setAutoStartPomodoro(settings["autoStartPomodoro"]);
+        setAutoStartBreak(settings["autoStartBreak"]);
+        alert("Settings-Changes saved")
 
     }
 
     const deleteTodo = ( id) => {
         
-        const newTodos = todos.filter(todo => todo.id!==id);
-        setTodos(newTodos);
+        const newTodos = todos.filter((todo, index) => index!==id);
+        updateCurrentTask(newTodos[0])
+        updateTodos(newTodos);
 
     }
 
     const deleteDone = ( id) => {
         
-        const newDones =dones.filter(done => done.id!==id);
-        setDones(newDones);
+        const newDones =dones.filter((done,index) => index !==id);
+        updateDones(newDones);
 
     }
-    const taskDone = ( todo) =>{
+    const taskDone = ( ) =>{
 
-        const newDones = [...dones, todo];
-        setDones(newDones);
+
+        const newDones = [...dones, currentTask];
+        updateDones(newDones);
+        deleteTodo(0);
+        updateCurrentTask(todos[0]);
     }
+    const updateList = () =>{
+        const newTodos=JSON.parse(todoCookie);
+        setTodos(newTodos);
+        const newDones=JSON.parse(doneCookie);
+        setDones(newDones);
+        updateCurrentTask(newTodos[0]);
+        
+    }
+    const updateCurrentTask =(todo) =>{
+        setCurrentTask(todo===undefined?{category:"", description: "no description"}:todo);
+    } 
+
+    useEffect(() => {
+        updateList();
+       },[]);
   
     return <Fragment>
         <div className="container">
@@ -47,7 +109,13 @@ const Home = () =>  {
             </header>
             
             <div className="main">
-                <Clock todo={todos[0]} sesssionValue={10} longValue={15} shortValue={5} delayValue={4} autoStartBreak={true} autoStartPomodoro={false} taskDone={taskDone} deleteTodo={deleteTodo}/>
+
+
+
+                  
+                <Clock currentTask={currentTask } sesssionValue={pomoDur} longValue={longDur} shortValue={shortDur} delayValue={breakDelay} autoStartBreak={autoStartBreak} autoStartPomodoro={autoStartPomodoro} taskDone={taskDone} deleteTodo={deleteTodo}>
+                    {currentTask.description}
+                </Clock>
 
                 <div className="pomodoro-todo">
                     <h4>Tarefas</h4>
@@ -57,11 +125,16 @@ const Home = () =>  {
                     <TodoList todos={dones}  deleteTodo={deleteDone} />
 
                 </div>
+                {console.log("current22", currentTask)}
 
                 <div className="about" id="about">
                     <h2>About 2</h2>
                 </div>
+                <div>
+                    <Settings submitSettings={submitSettings}/>
+                </div>
 
+                
             </div>
         </div>
     </Fragment>;

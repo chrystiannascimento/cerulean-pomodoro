@@ -1,6 +1,7 @@
 import React,{Fragment, useState, useEffect} from   "react"
 
-const Clock = ({todo,  delayValue, longValue, shortValue, sesssionValue, autoStartBreak, autoStartPomodoro, taskDone, deleteTodo}) => {
+const Clock = ({ children, currentTask, delayValue, longValue, shortValue, sesssionValue, autoStartBreak, autoStartPomodoro, taskDone, deleteTodo}) => {
+    const [task,setTask]=useState(currentTask)
     const [clock,setClock]=useState(sesssionValue*60);
     const [breakDelay,setBreakDelay] = useState(0);
     const [init, setInit]= useState(false);
@@ -32,8 +33,8 @@ const Clock = ({todo,  delayValue, longValue, shortValue, sesssionValue, autoSta
             setSession(false);
             setInit(autoStartBreak);
             setPause(!autoStartBreak);
-            taskDone(todo);
-            deleteTodo(todo.id);
+            taskDone(task);
+            deleteTodo(0);
 
         } else {
             setSession(true);
@@ -49,7 +50,7 @@ const Clock = ({todo,  delayValue, longValue, shortValue, sesssionValue, autoSta
 
     useEffect(() => {
         var timerID = setInterval( () =>tictac(), 1000 );
-      
+        
         return function cleanup() {
             clearInterval(timerID);
           };
@@ -119,7 +120,7 @@ const Clock = ({todo,  delayValue, longValue, shortValue, sesssionValue, autoSta
     }
     const fstBtnLabel = () =>{
         
-                if(init==false){
+                if(init===false){
                     return 'Iniciar'
                 }else {
                     if(pause){
@@ -140,13 +141,13 @@ const Clock = ({todo,  delayValue, longValue, shortValue, sesssionValue, autoSta
         <div className="clock">
             <div className="c-head">
                 <div>Settings</div>
-                <div>{`${session?'POMODORO' : 'BREAK'} #${countPomodoro}`} POMODORO #1</div>
+                <div>{`${session?'POMODORO' : short?'Take a Short Break': 'Take a long break'} #${countPomodoro}`} POMODORO #1</div>
             </div>
             <div className="c-time">
                 {`${getMinutes(clock)} : ${getSeconds(clock)}`}
             </div>
             <div className="c-description">
-                {todo.description}
+              {children}
             </div>
             <div className="c-buttons">
 

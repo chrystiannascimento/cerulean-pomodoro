@@ -7,8 +7,8 @@ const TodoList = ({todos, deleteTodo}) => {
 
     return <Fragment>
         <div className="todo-list">
-            {todos.map(todo =>(
-                <form className="todo" key={todo.id}>
+            {todos.map( (todo, index) =>(
+                <form className="todo" key={index}>
                     <div className="todo-cat">
                         {todo.category}
                     </div>
@@ -16,7 +16,7 @@ const TodoList = ({todos, deleteTodo}) => {
                         {todo.description}
                     </div>
                     <div className="todo-close">
-                        <button onClick={(e)=>{e.preventDefault();deleteTodo( todo.id);}}>&times;</button>
+                        <button onClick={(e)=>{e.preventDefault();deleteTodo( index);}}>&times;</button>
                     </div>
                 </form>
             ))}
